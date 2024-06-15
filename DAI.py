@@ -10,7 +10,7 @@ line_bot_api = LineBotApi(config.ChannelAccessToken)
 handler      = WebhookHandler(config.ChannelSecret)      
 user_id_set  = set()                                   
 app          = Flask(__name__)
-userId       = 'U75e318413dbd47da280cee2c9ef1d407'
+userId       = 'Uf133470b912b5defa38b6e4d63b822b7'
 
 def loadUserId():
     try:
@@ -47,23 +47,23 @@ import time, random, requests
 import DAN
 
 ServerURL = 'https://2.iottalk.tw'
-Reg_addr  = None
+Reg_addr  = '170.1.3'
 
-DAN.profile['dm_name'] = 'Dummy_Device'
-DAN.profile['df_list'] = ['Dummy_Sensor', 'Dummy_Control']
-DAN.profile['d_name']  = "pw."+ str(random.randint(100,999)) +"_"+ DAN.profile['dm_name']
+DAN.profile['dm_name'] = '039120_ODF'
+DAN.profile['df_list'] = ['Volume']
+DAN.profile['d_name']  = '039120_Dummy_Device'
 DAN.device_registration_with_retry(ServerURL, Reg_addr)
 
 i = 1
 
 while True:
     try:
-        ODF_data = DAN.pull('Dummy_Control')
+        ODF_data = DAN.pull('Volume')
         if ODF_data != None:
             if i:
                 line_bot_api.push_message(userId, TextSendMessage(text = 'linebot is ready for you'))
                 i = 0
-            print (ODF_data)
+            print (ODF_data[0])
             if ODF_data[0] > 90:
                 line_bot_api.push_message(userId, TextSendMessage(text = '我要抱抱'))
 
